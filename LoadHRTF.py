@@ -1,9 +1,8 @@
 import scipy.io as sio
 
-def load_hrtf(file):
-    
 
+#def load_hrtf(file):
+    #load hrtf here
 
-def main():
-
-    
+#def main():
+    #load here
