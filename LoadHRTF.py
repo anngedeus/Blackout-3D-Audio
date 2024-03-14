@@ -1,8 +1,7 @@
 import scipy.io as sio
 
 
-#def load_hrtf(file):
-    #load hrtf here
+def main():
+    data = sio.loadmat("./CIPIC_50_HRTF.mat")
 
-#def main():
-    #load here
+
