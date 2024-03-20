@@ -84,25 +84,34 @@ while running:
             player_img = pygame.transform.scale(player_img, (50, 100))
             screen.blit(player_img, (player_x, player_y))
             player_y -= jump_height
-            jump_height -=1
-            if jump_height ==0:
+            jump_height -=2
+            if jump_height < -10:
                 player_jump = False
+                player_img = pygame.image.load('assets/runner.png')
+                player_img = pygame.transform.scale(player_img, (50, 100))
                 jump_height = 10
-                player_y += 55
+                #player_y += 55
         else:
+            if player_y < HEIGHT - GROUND_HEIGHT - player_img.get_height():
+                player_y += jump_height
+                jump_height += 2
             if player_slide: 
                 player_img = pygame.image.load('assets/slide.png')
                 player_img = pygame.transform.scale(player_img, (50, 100))
                 screen.blit(player_img, (player_x, player_y))
                 player_y -= slide_height
-                slide_height +=1
-                if slide_height ==0:
+                slide_height +=2
+                if slide_height > 10:
                     player_slide = False
+                    player_img = pygame.image.load('assets/runner.png')
+                    player_img = pygame.transform.scale(player_img, (50, 100))
                     slide_height = -10
-                    player_y -= 55
+            if player_y > HEIGHT - GROUND_HEIGHT + player_img.get_height():
+                    player_y += slide_height
+                    slide_height -= 2
+                    #player_y -= 55
             else:
-                player_img = pygame.image.load('assets/runner.png')
-                player_img = pygame.transform.scale(player_img, (50, 100))
+                player_y = HEIGHT - GROUND_HEIGHT - player_img.get_height()
 
     #obstacle movements
     sign1_y += OBS_SPEED
