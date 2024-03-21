@@ -4,9 +4,10 @@ Python Dependencies: glob, pygame, os, numpy, soundfile, pydub, scipy (Installed
 
 Steps: 
 1. Unzip File
-2. Create 3.11.8 Python Environment
-3. Download dependencies via pip in console 
-4. Run via VS Code 
+2. Open ProofOfConcept folder
+3. Create 3.11.8 Python Environment
+4. Download dependencies via pip in console 
+5. Run via VS Code w/ ProofOfConcept as default workspace folder
 
 *Path Dependencies are handled in program, no further action required*
 
