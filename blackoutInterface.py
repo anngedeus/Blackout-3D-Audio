@@ -2,6 +2,9 @@
 
 # Import and initialize the pygame library
 import pygame
+import numpy as np
+import librosa
+
 pygame.init()
 
 #game constants
@@ -27,6 +30,17 @@ sign_img = pygame.image.load('assets/sign.png')
 sign_img = pygame.transform.scale(sign_img, (50, 100))
 train_img = pygame.image.load('assets/train.jpg')
 train_img = pygame.transform.scale(train_img, (70, 70))
+
+#load player sounds
+footsteps = pygame.mixer.Sound("Audio/footsteps.wav")
+jump = pygame.mixer.Sound("Audio/cartoon-jump.wav")
+player_hit_sound = pygame.mixer.Sound("Audio/umph.wav")
+slide = pygame.mixer.Sound("Audio/sliding.wav")
+
+#load object sounds
+#coin_sound = pygame.mixer.Sound("Audio/sparkle.wav")
+#train_sound = pygame.mixer.Sound("Audio/train.wav")
+#sign_sound = pygame.mixer.Sound("Audio/creakingnoise.wav")
 
 #define player variables
 player_x = WIDTH // 2
@@ -59,9 +73,12 @@ pygame.display.set_caption("BlackOUT")
 running = True
 
 while running:
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            
+        footsteps.play()
 
         #handle player input
         keys = pygame.key.get_pressed()
@@ -81,12 +98,16 @@ while running:
 
         if player_jump:
             player_img = pygame.image.load('assets/jump.png')
+            footsteps.stop()
+            jump.play()
             player_img = pygame.transform.scale(player_img, (50, 100))
             screen.blit(player_img, (player_x, player_y))
             player_y -= jump_height
             jump_height -=2
             if jump_height < -10:
                 player_jump = False
+                jump.stop()
+                footsteps.play()
                 player_img = pygame.image.load('assets/runner.png')
                 player_img = pygame.transform.scale(player_img, (50, 100))
                 jump_height = 10
@@ -97,12 +118,16 @@ while running:
                 jump_height += 2
             if player_slide: 
                 player_img = pygame.image.load('assets/slide.png')
+                footsteps.stop()
+                slide.play()
                 player_img = pygame.transform.scale(player_img, (50, 100))
                 screen.blit(player_img, (player_x, player_y))
                 player_y -= slide_height
                 slide_height +=2
                 if slide_height > 10:
                     player_slide = False
+                    slide.stop()
+                    footsteps.play()
                     player_img = pygame.image.load('assets/runner.png')
                     player_img = pygame.transform.scale(player_img, (50, 100))
                     slide_height = -10
@@ -118,6 +143,10 @@ while running:
     sign2_y += OBS_SPEED
     coin1_y += OBS_SPEED
     train1_y += TRAIN_SPEED
+    
+    #3D Sound
+    
+    
     #collision detection 
     if player_invulnerable_frames >0: player_invulnerable_frames -=1      
     player_rect = pygame.Rect(player_x, player_y, player_img.get_width(), player_img.get_height())
@@ -127,13 +156,16 @@ while running:
     train1_rect = pygame.Rect(train1_x, train1_y, train_img.get_width(), train_img.get_height())
     #SIGNS
     if player_rect.colliderect(sign1_rect) and player_invulnerable_frames ==0 and player_slide == False:
+        player_hit_sound.play()
         LIVES -= 1
         player_invulnerable_frames = 2100
     if player_rect.colliderect(sign2_rect) and player_invulnerable_frames ==0 and player_slide == False:
+        player_hit_sound.play()
         LIVES -= 1
         player_invulnerable_frames = 2100
     #TRAINS
     if player_rect.colliderect(train1_rect) and player_invulnerable_frames ==0:
+        player_hit_sound.play()
         LIVES -= 1
         player_invulnerable_frames = 2100
 
