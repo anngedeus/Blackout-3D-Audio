@@ -1,8 +1,10 @@
 # Simple pygame program ----- An example for now --- for testing interface
 
 # Import and initialize the pygame library
-import pygame
+import pygame, glob
 import numpy as np
+import soundfile as sf
+from pydub import AudioSegment
 import librosa
 
 pygame.init()
@@ -145,6 +147,74 @@ while running:
     train1_y += TRAIN_SPEED
     
     #3D Sound
+    # Load KEMAR HRTF data
+    kemar = './KEMAR/full/elev0/*.wav'
+    KEMAR = glob.glob(kemar)
+    
+    def audio_3d_space(object_audio):
+        for i in (range(0, int((len(KEMAR) / 2) - 1), 1)):
+            t1 = i * 1300
+            t2 = t1 + 1300
+        
+            #Loads audio file and snippet that is to be convolved 
+            snippet = AudioSegment.from_wav(object_audio)
+            snippet = snippet[t1:t2]
+            
+            #Must export snippet as .wav file to read NumPY array 
+            snippet.export("rotate.wav", format="wav")
+            [bsHRTF, bsSample] = sf.read("rotate.wav")
+            bsHRTF = np.mean(bsHRTF, axis=1)
+            
+            #HRTF in clockwise circle gathered and convolved with current snippet
+            [LHRTF, sample] = sf.read(KEMAR[i])
+            [RHRTF, sample] = sf.read(KEMAR[i + 72])
+            L = np.convolve(bsHRTF, LHRTF)
+            R = np.convolve(bsHRTF, RHRTF)
+            
+            #Binaural mix NumPY array is created, this is the desired final audio data 
+            Bin_Mix = np.vstack([L,R]).transpose()
+
+
+    # Control audio playback based on object positions
+    def update_audio_positions(object_audios):
+        for object_audio, object_position in zip(object_audios, object_positions):
+            # Load audio file for this object
+            audio, sr = librosa.load(object_audio, sr=None, mono=False)
+            
+            # Calculate listener position and orientation
+            player_position = (player_x, player_y)
+            #listener_orientation = calculate_listener_orientation()
+            
+            # Calculate distance and direction from listener to object
+            distance = np.linalg.norm(np.array(player_position) - np.array(object_position))
+            direction = (np.array(object_position) - np.array(player_position))  / np.linalg.norm(direction)
+            
+            # Apply HRTF to the audio signal based on direction
+            #[LHRTF, sample] = sf.read(KEMAR[i])
+            #[RHRTF, sample] = sf.read(KEMAR[i + 72])
+            #audio_left = np.convolve(audio[0], LHRTF, mode='same')
+            #audio_right = np.convolve(audio[1], RHRTF, mode='same')
+            
+            # Adjust volume based on distance
+            volume = 1.0 / (distance + 1.0)
+            audio_left *= volume
+            audio_right *= volume
+            
+            # Play spatialized audio for this object
+            # Convert NumPy arrays to Pygame sound objects
+            sound_left = pygame.sndarray.make_sound(audio_left.astype(np.int16))
+            sound_right = pygame.sndarray.make_sound(audio_right.astype(np.int16))
+            
+            # Play the stereo sound
+            sound_left.play()
+            sound_right.play()
+
+    # Example usage
+    object_audios = ["Audio/train.mp3", "Audio/creakingnoise.wav", "Audio/Sparkle.wav"]
+    object_positions = [(train1_x, train1_y), (sign1_x, sign1_y), (coin1_x, coin1_y)]
+
+    # Update audio positions continuously
+    update_audio_positions(object_audios)
     
     
     #collision detection 
