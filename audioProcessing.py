@@ -8,7 +8,7 @@ pygame.mixer.pre_init(88200, -16, 2, 4096)
 pygame.mixer.init()
 pygame.init()
 
-kemar = './KEMAR/full/elev0/*.wav'
+kemar = './ProofOfConcept/KEMAR/full/elev0/*.wav'
 KEMAR = glob.glob(kemar)
 
 audio = AudioSegment.from_mp3("Audio/TrainFinal.wav")
