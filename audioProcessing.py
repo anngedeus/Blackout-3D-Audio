@@ -11,7 +11,7 @@ pygame.init()
 kemar = './ProofOfConcept/KEMAR/full/elev0/*.wav'
 KEMAR = glob.glob(kemar)
 
-audio = AudioSegment.from_mp3("Audio/TrainFinal.wav")
+audio = AudioSegment.from_wav("Audio/TrainFinal.wav")
 
 sampleRate = 200
 
