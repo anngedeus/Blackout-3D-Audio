@@ -311,7 +311,7 @@ while running:
             player_img = pygame.transform.scale(player_img, (50, 100))
             screen.blit(player_img, (player_x, player_y))
             player_y -= jump_height
-            jump_height -=2
+            jump_height -= 20
             if jump_height < -10:
                 player_jump = False
                 footsteps.play()
@@ -329,7 +329,7 @@ while running:
                 player_img = pygame.transform.scale(player_img, (50, 100))
                 screen.blit(player_img, (player_x, player_y))
                 player_y -= slide_height
-                slide_height +=2
+                slide_height +=20
                 if slide_height > 10:
                     player_slide = False
                     slide.stop()
