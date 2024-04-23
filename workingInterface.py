@@ -311,7 +311,7 @@ while running:
             player_img = pygame.transform.scale(player_img, (50, 100))
             screen.blit(player_img, (player_x, player_y))
             player_y -= jump_height
-            jump_height -=2
+            jump_height -= 20
             if jump_height < -10:
                 player_jump = False
                 footsteps.play()
@@ -329,7 +329,7 @@ while running:
                 player_img = pygame.transform.scale(player_img, (50, 100))
                 screen.blit(player_img, (player_x, player_y))
                 player_y -= slide_height
-                slide_height +=2
+                slide_height +=20
                 if slide_height > 10:
                     player_slide = False
                     slide.stop()
@@ -368,28 +368,28 @@ while running:
     
     #SIGNS
     if player_rect.colliderect(sign1_rect) and player_invulnerable_frames ==0 and player_slide == False:
-        player_hit_sound.play()
+        userAction_channel.play(player_hit_sound)
         LIVES -= 1
         player_invulnerable_frames = 2100
     if player_rect.colliderect(sign2_rect) and player_invulnerable_frames ==0 and player_slide == False:
-        player_hit_sound.play()
+        userAction_channel.play(player_hit_sound)
         LIVES -= 1
         player_invulnerable_frames = 2100
     #TRAINS
     if player_rect.colliderect(train1_rect) and player_invulnerable_frames ==0:
-        player_hit_sound.play()
+        userAction_channel.play(player_hit_sound)
         LIVES -= 1
         player_invulnerable_frames = 2100
     elif player_rect.colliderect(train2_rect) and player_invulnerable_frames ==0:
-        player_hit_sound.play()
+        userAction_channel.play(player_hit_sound)
         LIVES -= 1
         player_invulnerable_frames = 2100
     elif player_rect.colliderect(train3_rect) and player_invulnerable_frames ==0:
-        player_hit_sound.play()
+        userAction_channel.play(player_hit_sound)
         LIVES -= 1
         player_invulnerable_frames = 2100
     elif player_rect.colliderect(train4_rect) and player_invulnerable_frames ==0:
-        player_hit_sound.play()
+        userAction_channel.play(player_hit_sound)
         LIVES -= 1
         player_invulnerable_frames = 2100
     #COINSE
@@ -403,9 +403,10 @@ while running:
         player_invulnerable_frames = 1800
         userAction_channel.play(collect)
         collected = True
-    # Fill the background with white
-    screen.fill((255, 255, 255))
-
+    # Fill the background with black
+    screen.fill((0,0,0))
+    '''
+    Removing visuals
     # Draw a solid blue circle in the center
     pygame.draw.circle(screen, (0, 0, 155), (WIDTH /2, 150), 50)
 
@@ -419,12 +420,14 @@ while running:
     screen.blit(train_img, (train2_x, train2_y))
     screen.blit(train_img, (train3_x, train3_y))
     screen.blit(train_img, (train4_x, train4_y))
+    '''
     #display score/lives
     font = pygame.font.Font(None, 36)
-    score_text = font.render(f"Score: {SCORE}", True, (0,0,0))
-    lives_text = font.render(f"Lives: {LIVES}", True, (0,0,0))
+    score_text = font.render(f"Score: {SCORE}", True, (255, 255, 255))
+    lives_text = font.render(f"Lives: {LIVES}", True, (255, 255, 255))
     screen.blit(score_text, (20,10))
     screen.blit(lives_text, (20, 40))
+    
     # Flip the display
     pygame.display.flip()
     if LIVES == 0: running = False
