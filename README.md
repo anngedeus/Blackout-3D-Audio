@@ -26,3 +26,8 @@ Players must rely on what they hear to decide when to switch lanes, jump, or sli
 * Use the up arrow to jump, boing sound, which will help collect coins, shimmer sound
 * There are a total of 3 lives that can be lost anytime you hit a train or sign followed by an umph sound
 * When all three lives are lost or there are no more coins to earn, the game will end
+
+##Three Design Decisions Made as a Perceptual Consideration for the user 
+1. Distinct audio cues: Players can differentiate between switching lanes, sliding, and jumping with a distinct sound cue allowing them to navigate the game effectively and know what action they are doing
+2. Consistent audio feedback: Players can quickly recognize events such as collisions with trains or signs and collecting coins with consistent audio feedback. These sounds include a low pitch "umph" sound when a player is hit and a high pitch beam sound when a coin is collected. 
+3. Volume: To avoid overstimulation and confusion, the volume of the background track and other sounds have been adjusted so that players can hear and distinguish the different sounds in this game.
