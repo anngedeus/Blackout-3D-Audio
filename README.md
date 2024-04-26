@@ -1,6 +1,6 @@
 # Blackout-3D-Audio
 Welcome to BlackOUT! 
-This is a 3D Audio Python game where players must navigate between three lanes to avoid trains, swinging signs, and other obstacles but with no visual aid. 
+This is a 3D Audio Python game where players must navigate between three lanes to avoid trains and swinging signs while collecting coins but with no visual aid. 
 Players must rely on what they hear to decide when to switch lanes, jump, or slide. 
 
 ## Features
@@ -24,5 +24,5 @@ Players must rely on what they hear to decide when to switch lanes, jump, or sli
 * Use the left and right arrow keys to move between lanes, you will hear a whooshing sound when this happens
 * Use the down arrow to slide, you will hear a gravel sliding sound; this will come in handy to avoid swinging signs that are creaking
 * Use the up arrow to jump, boing sound, which will help collect coins, shimmer sound
-* There are a total of 3 lives which can be lost anytime you hit a train or sign followed by an umph sound
+* There are a total of 3 lives that can be lost anytime you hit a train or sign followed by an umph sound
 * When all three lives are lost or there are no more coins to earn, the game will end
